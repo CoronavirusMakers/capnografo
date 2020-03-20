@@ -11,18 +11,20 @@ GraphDisplay::GraphDisplay(HardwareSerial &print_serial, LiquidCrystal *lcd)
   
   lcd_ = lcd;
   lcd_->begin(16, 2);
+  
 }
 
 void
 GraphDisplay::step(float value)
 {
   /*
-   * value: c02 value to print in the graph
+   * value: value to print in the graph
    */
-   
-  printer_->println(value);
-  lcd_->setCursor(0, 8);
-  lcd_->print(millis() / 1000);
+  //lcd_->begin(16, 2);
+  
+  lcd_->setCursor(6, 1);
+
+  lcd_->print(value);
 }
 
 };

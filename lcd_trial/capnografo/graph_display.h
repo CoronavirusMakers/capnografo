@@ -25,7 +25,5 @@ private:
 
 };
 
-//int addTwoInts(int a, int b);
-
 
 #endif
