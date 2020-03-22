@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include "RecordingSet.h"
 
 
@@ -6,11 +8,19 @@ class Capnograph;
 
 class AnalysisPattern
 {
-    Capnograph& cartograph;
+    Capnograph* cartograph = nullptr;
 
-    AnalysisPattern(Capnograph& cartograph) : cartograph{cartograph} {}
+
+public:
+
+    AnalysisPattern() {}
     virtual ~AnalysisPattern() {}
 
-    virtual bool Analize(const RecordingSet& recording) const {}
+    void Setup(Capnograph* inCartograph)
+    {
+        cartograph = inCartograph;
+    }
+
+    virtual bool Analize(const RecordingSet& recording) const = 0;
     virtual void OnTrigger() const {}
 };

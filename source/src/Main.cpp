@@ -1,8 +1,17 @@
 
+#include <Arduino.h>
+
 #include "Capnograph.h"
 
 
-int main() {
-    Capnograph captograph {};
-    return 0;
+Capnograph captograph {};
+
+void setup()
+{
+    captograph.Setup();
+}
+
+void loop()
+{
+    captograph.Loop();
 }

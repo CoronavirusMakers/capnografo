@@ -1,6 +1,5 @@
 
-#include <vector>
-#include <memory>
+#pragma once
 
 #include "Alarm.h"
 #include "Display.h"
@@ -11,26 +10,34 @@
 
 class Capnograph
 {
+public:
+
     Alarm alarm;
     Display display;
     Sensor sensor;
 
-    // List of patterns
-    std::vector<std::unique_ptr<AnalysisPattern>> analysisPatterns;
+    Pattern_Hiperventilation pattern_hiperventilation;
+    Pattern_Hipoventilation pattern_hipoventilation;
+    // List of patterns. First is higher priority.
+    AnalysisPattern* analysisPatterns[2] {&pattern_hiperventilation, &pattern_hipoventilation};
 
 
-    Capnograph()
+    void Setup()
     {
-        // The order of registration implies order of priority.
-        // First registered is higher priority
-        RegisterPattern<Pattern_Hiperventilation>();
-        RegisterPattern<Pattern_Hipoventilation>();
+        SetupPatterns();
     }
 
-    template<typename T>
-    T& RegisterPattern()
+    void Loop() {}
+
+    static constexpr int GetNumPatterns() { return sizeof(analysisPatterns) / sizeof(AnalysisPattern*); }
+
+protected:
+
+    void SetupPatterns()
     {
-        analysisPatterns.push_back(std::make_unique<T>(*this));
-        return *analysisPatterns.back().get();
+        for(auto* pattern : analysisPatterns)
+        {
+            pattern->Setup(this);
+        }
     }
 };

@@ -1,2 +1,4 @@
 
+#pragma once
+
 class Alarm {};
