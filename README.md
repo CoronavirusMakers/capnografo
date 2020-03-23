@@ -1,6 +1,5 @@
 # CAPNOGRAFO
-# In this repository we will care abot the implementation of the capnography(CO2) measurement
-device.
+# In this repository we will care abot the implementation of the capnography(CO2) measurement device
 
 READ THIS:
 - Here the link for the specification:
