@@ -25,9 +25,12 @@ public:
     void Setup()
     {
         SetupPatterns();
+        display.Start();
     }
 
-    void Loop() {}
+    void Loop() {
+        display.Render();
+    }
 
     static constexpr int GetNumPatterns() { return sizeof(analysisPatterns) / sizeof(AnalysisPattern*); }
 
