@@ -1,6 +1,6 @@
 
 #include "Display/Graph.h"
-#include "Display.h"
+#include "Display/Display.h"
 
 
 void Graph::Draw(Display& screen)

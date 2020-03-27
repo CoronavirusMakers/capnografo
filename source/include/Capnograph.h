@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Alarm.h"
-#include "Display.h"
+#include "UI.h"
 #include "Sensor.h"
 #include "Pattern.h"
 #include "AllPatterns.h"
@@ -14,7 +14,7 @@ class Capnograph
 public:
 
     Alarm alarm;
-    Display display;
+    UI ui;
     Sensor sensor;
 
     Pattern_Hiperventilation pattern_hiperventilation;
@@ -30,13 +30,12 @@ public:
         frame.SetFPSCap(20);
 
         SetupPatterns();
-        display.Start();
+        ui.Start();
     }
 
     void Loop() {
         frame.Tick();
-        display.Render();
-
+        ui.Draw();
         Serial.println(frame.GetFPS());
         frame.PostTick();
     }
