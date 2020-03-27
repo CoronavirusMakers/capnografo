@@ -13,11 +13,12 @@ class Display;
 struct Graph
 {
     float midYBar = 45.f;
-    float maxY = 50.f;
+    float maxY = 55.f;
     float maxX = 10.f;
+
+    u32 leftMargin = 10;
     v2i position {10, 10};
     v2i size {60, 15};
-    u32 leftMargin = 10;
 
 
     Graph() = default;
@@ -33,7 +34,11 @@ struct Graph
 
     void DrawLine(Display& display, v2 a, v2 b, u16 color) const;
 
-    void DrawFloat(Display& display, v2 location, float value, u16 color) const;
+    void DrawFloat(Display& display, v2 location, float value, u16 color, u32 digits = 2) const
+    {
+        DrawFloat(display, ToPixel(location), value, color, digits);
+    }
+    void DrawFloat(Display& display, v2i pixel, float value, u16 color, u32 digits = 2) const;
 
 private:
 

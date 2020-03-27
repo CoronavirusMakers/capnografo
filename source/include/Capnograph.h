@@ -15,28 +15,36 @@ public:
 
     Alarm alarm;
     UI ui;
-    Sensor sensor;
+    Sensor& sensor{ realSensor };
 
     Pattern_Hiperventilation pattern_hiperventilation;
     Pattern_Hipoventilation pattern_hipoventilation;
     // List of patterns. First is higher priority.
     AnalysisPattern* analysisPatterns[2] {&pattern_hiperventilation, &pattern_hipoventilation};
 
+    RecordingSet record {2000};
     FrameTime frame;
 
+private:
+
+    Sensor_MockAnalog realSensor;
+
+
+public:
 
     void Setup()
     {
         frame.SetFPSCap(20);
-
         SetupPatterns();
         ui.Start();
     }
 
     void Loop() {
         frame.Tick();
-        ui.Draw();
-        Serial.println(frame.GetFPS());
+
+        sensor.Record(record);
+        ui.Draw(*this);
+        //Serial.println(frame.GetFPS());
         frame.PostTick();
     }
 

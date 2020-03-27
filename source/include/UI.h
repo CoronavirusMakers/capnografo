@@ -5,6 +5,8 @@
 #include "Display/Graph.h"
 
 
+class Capnograph;
+
 class UI
 {
 public:
@@ -15,23 +17,14 @@ public:
     const float graphDuration = 10.f;
 
 
-    UI()
-    {
-        graph.position = {0, 0};
-        graph.size = {display.size.x, display.size.y / 2};
-    }
+    void Start();
 
-    void Start()
-    {
-        display.Start();
-    }
-
-    void Draw()
-    {
-        display.FillColor(COLOR_BLACK);
-        graph.Draw(display);
-    }
+    void Draw(Capnograph& capnograph);
     
     void SetCurrentCO2(float value) {}
     void UpdateRecording(const RecordingSet& recording) {}
+
+private:
+
+    void DrawCurrentValue(Capnograph& capnograph);
 };
