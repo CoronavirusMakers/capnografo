@@ -3,6 +3,7 @@
 //You can upload this to a arduino board and conect from the serial TX to simulate a sensor
 //The raw data has an 0 to 100 ppm random offset per sample, the filtered is always the same.
 //You can choose between 20Hz or 50Hz sample time
+//Also you can use the Arduino Serial Plotter to see de values!
 
 int sensorHz = 20; //choose 20 or 50Hz
 
