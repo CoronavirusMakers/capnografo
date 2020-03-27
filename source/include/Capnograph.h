@@ -2,10 +2,11 @@
 #pragma once
 
 #include "Alarm.h"
-#include "Display.h"
+#include "UI.h"
 #include "Sensor.h"
 #include "Pattern.h"
 #include "AllPatterns.h"
+#include "Display/FrameTime.h"
 
 
 class Capnograph
@@ -13,23 +14,38 @@ class Capnograph
 public:
 
     Alarm alarm;
-    Display display;
-    Sensor sensor;
+    UI ui;
+    Sensor& sensor{ realSensor };
 
     Pattern_Hiperventilation pattern_hiperventilation;
     Pattern_Hipoventilation pattern_hipoventilation;
     // List of patterns. First is higher priority.
     AnalysisPattern* analysisPatterns[2] {&pattern_hiperventilation, &pattern_hipoventilation};
 
+    RecordingSet record {2000};
+    FrameTime frame;
+
+private:
+
+    Sensor_MockAnalog realSensor;
+
+
+public:
 
     void Setup()
     {
+        frame.SetFPSCap(20);
         SetupPatterns();
-        display.Start();
+        ui.Start();
     }
 
     void Loop() {
-        display.Render();
+        frame.Tick();
+
+        sensor.Record(record);
+        ui.Draw(*this);
+        //Serial.println(frame.GetFPS());
+        frame.PostTick();
     }
 
     static constexpr int GetNumPatterns() { return sizeof(analysisPatterns) / sizeof(AnalysisPattern*); }
