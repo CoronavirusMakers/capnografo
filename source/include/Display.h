@@ -1,56 +1,85 @@
 
 #pragma once
 
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_ST7735.h>
-
+#include "Platform.h"
+#include "Math/v2.h"
+#include "Math/v2i.h"
+#include "Display/DisplayTypes.h"
+#include "Display/Graph.h"
 #include "RecordingSet.h"
 
-// Some ready-made 16-bit ('565') color settings
-// TODO: Move to a FColor struct
-#define COLOR_BLACK   0x0000
-#define COLOR_WHITE   0xFFFF
-#define COLOR_RED     0xF800
-#define COLOR_GREEN   0x07E0
-#define COLOR_BLUE    0x001F
-#define COLOR_CYAN    0x07FF
-#define COLOR_MAGENTA 0xF81F
-#define COLOR_YELLOW  0xFFE0
-#define COLOR_ORANGE  0xFC00
+
 
 class Display
 {
-    Adafruit_ST7735 lcd{5, 2, 4};
+    // Should X and Y be flipped?
+    static constexpr bool bFlippedAxis = true;
+
+    // Offset to apply to screen positions in some displays.
+    // Change it as needed by the target screen
+    const v2i offset {1, 2};
+
+    ScreenType screen {5, 2, 4};
+
+    // Real available size of the screen
+    const v2i size;
+
+    Graph graph {};
 
     const float graphDuration = 10.f;
 
-    // Highest vertical value in mmHg
-    const float graphTopCO2 = 60.f;
-
-    // Maximum healthy CO2 in mmHg
-    // Displayed as a vertical line
-    const float graphMaxCO2 = 45.f;
 
 public:
 
+    Display()
+        : size{
+            i32(screen.height()) - offset.x,
+            i32(screen.width())  - offset.y
+        }
+    {
+        graph.position = {0, 0};
+        graph.size = {size.x, size.y / 2};
+    }
+
     void Start()
     {
-        lcd.initR(INITR_BLACKTAB);
-        
-        lcd.fillScreen(COLOR_BLACK);
+        screen.enableTearing(false);
+        screen.initR(INITR_BLACKTAB);
+        screen.fillScreen(COLOR_BLACK);
     }
 
     void Render()
     {
-        lcd.fillScreen(COLOR_BLACK);
-        lcd.drawLine(0, 0, 127, 159, COLOR_GREEN);
-        delay(500);
-        lcd.fillScreen(COLOR_BLACK);
-        lcd.drawLine(0, 159, 127, 0, COLOR_GREEN);
-        delay(500);
+        screen.fillScreen(COLOR_BLACK);
+        graph.Draw(*this);
     }
 
     void SetCurrentCO2(float value) {}
     void UpdateRecording(const RecordingSet& recording) {}
+
+    void DrawPixel(v2i position, u16 color)
+    {
+        position = ToScreen(position);
+        screen.drawPixel(position.x, position.y, color);
+    }
+
+    void DrawLine(v2i a, v2i b, u16 color)
+    {
+        a = ToScreen(a);
+        b = ToScreen(b);
+        screen.drawLine(a.x, a.y, b.x, b.y, color);
+    }
+
+    v2i ToScreen(v2i position) const
+    {
+        position += offset;
+        if (bFlippedAxis) // constexpr
+        {
+            return {position.y, position.x}; // Flip screen
+        }
+        else
+        {
+            return position;
+        }
+    }
 };
