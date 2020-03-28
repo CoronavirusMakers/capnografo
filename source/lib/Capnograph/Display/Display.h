@@ -25,7 +25,7 @@ protected:
 
     // Offset to apply to screen positions in some displays.
     // Change it as needed by the target screen
-    const v2i offset {1, 2};
+    const v2i offset {1, 1};
 
     ScreenType screen {5, 2, 4}; // CS, RS, RST
     //~ END Display Settings
@@ -35,31 +35,15 @@ public:
 
     Display() {}
 
-    void Start()
-    {
-        screen.enableTearing(false);
-        screen.initR(INITR_BLACKTAB);
-        FillColor(COLOR_BLACK);
-        SetRotation(1);
-    }
+    void Start();
 
-    void FillColor(u16 color)
-    {
-        screen.fillScreen(color);
-    }
+    void FillColor(u16 color);
 
-    void DrawPixel(v2i position, u16 color)
-    {
-        position = ToScreen(position);
-        screen.drawPixel(position.x, position.y, color);
-    }
+    void DrawPixel(v2i position, u16 color);
 
-    void DrawLine(v2i a, v2i b, u16 color)
-    {
-        a = ToScreen(a);
-        b = ToScreen(b);
-        screen.drawLine(a.x, a.y, b.x, b.y, color);
-    }
+    void DrawLine(v2i a, v2i b, u16 color);
+
+    void DrawRect(v2i pos, v2i size, u16 color);
 
     // BEGIN Prints
     void SetCursor(v2i position)
@@ -67,9 +51,15 @@ public:
         position = ToScreen(position);
         screen.setCursor(position.x, position.y);
     }
+
     void SetTextColor(u16 color)
     {
         screen.setTextColor(color);
+    }
+
+    void SetTextColor(u16 color, u16 bg)
+    {
+        screen.setTextColor(color, bg);
     }
 
     void SetTextSize(u8 size)
@@ -100,13 +90,7 @@ public:
     }
     // END Prints
 
-    v2i GetSize() const
-    {
-        return {
-            i32(screen.width())  - offset.x,
-            i32(screen.height()) - offset.y
-        };
-    }
+    v2i GetSize() const;
 
     v2i ToScreen(v2i position) const;
 };

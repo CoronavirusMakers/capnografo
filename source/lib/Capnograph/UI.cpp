@@ -15,7 +15,7 @@ void UI::Start()
 void UI::Draw(Capnograph& capnograph)
 {
     display.FillColor(COLOR_BLACK);
-    graph.Draw(display);
+    graph.Draw(display, capnograph.record);
 
     //Axis tests
     //display.DrawPixel({0, 0}, COLOR_CYAN);
@@ -41,6 +41,6 @@ void UI::DrawCurrentValue(Capnograph& capnograph)
 
     display.SetCursor({10, display.GetSize().y - 10});
     display.SetTextSize(4);
-    display.SetTextColor(color);
+    display.SetTextColor(color, COLOR_BLACK);
     display.Print(value, 0);
 }

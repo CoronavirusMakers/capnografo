@@ -1,13 +1,11 @@
-# CAPNOGRAFO
+# COVID-19 CAPNOGRAPH
 
-## In this repository we will care about the implementation of the capnography(CO2) measurement device
+A Capnograph is a medical device for measuring patient breathing CO2.
 
-**READ THIS:**
+This project implements an open-source, cheap and quick to manufacture alternative to comercial capnographs during the COVID-19 pandemic.
 
-* [Here](https://docs.google.com/document/d/1Fy8tQPNT1egSTognoJjIqcrcn0vAoZsc47lan9tsMqQ/edit#) is the link for the specification.
 
-* [Here](https://en.wikipedia.org/wiki/Capnography) is the link to some basic information from wikipedia.
-
-* You can add notes, and if you are a very active member, edition rights will be granted.
-
-* [Here](https://drive.google.com/drive/folders/1-fBFVFW2NwqgQL-am8wTxIKTYgCndMPH?usp=sharing) is the link for the general google drive.
+## Must Read
+- Specification: https://docs.google.com/document/d/1Fy8tQPNT1egSTognoJjIqcrcn0vAoZsc47lan9tsMqQ/edit#
+- [Drive Folder](https://drive.google.com/drive/folders/1-fBFVFW2NwqgQL-am8wTxIKTYgCndMPH?usp=sharing)
+- About Capnography: https://en.wikipedia.org/wiki/Capnography

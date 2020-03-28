@@ -27,10 +27,19 @@ public:
 
     virtual void Record(RecordingSet& record) override
     {
-        u16 iValue = analogRead(pin);
-        Serial.println(iValue);
-
-        const float value01 = float(iValue) / 4096;
+        // Read signal 4 times and average value
+        u16 value = 0;
+        for(u8 i = 0; i < 4; ++i)
+        {
+            value += analogRead(pin);
+            delayMicroseconds(50);
+        }
+        value /= 4;
+        
+        // Record value
+        const float value01 = float(value) / 4096;
         lastValue = minValue + (value01 * (maxValue - minValue));
+
+        record.RecordValue(lastValue);
     }
 };
