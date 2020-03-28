@@ -9,12 +9,21 @@
 
 
 class Display;
+class RecordingSet;
+
+enum class GraphType : u8
+{
+    Line,
+    Bars
+};
 
 struct Graph
 {
+    GraphType type = GraphType::Line;
+
     float midYBar = 45.f;
     float maxY = 55.f;
-    float maxX = 10.f;
+    float maxX = 1.f;
 
     u32 leftMargin = 10;
     v2i position {10, 10};
@@ -24,13 +33,13 @@ struct Graph
     Graph() = default;
 
     // Draws all the components of the graph
-    void Draw(Display& display);
+    void Draw(Display& display, RecordingSet& record);
 
     void DrawAxis(Display& display) const;
 
-    void DrawLines(Display& display) const;
-
     void DrawLabels(Display& display) const;
+
+    void DrawData(Display& display, RecordingSet& record) const;
 
     void DrawLine(Display& display, v2 a, v2 b, u16 color) const;
 

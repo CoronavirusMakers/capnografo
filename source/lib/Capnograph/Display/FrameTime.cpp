@@ -19,7 +19,10 @@ void FrameTime::Tick()
 
 void FrameTime::PostTick()
 {
-	const float extraTimeForFPSCAP = minFrameTime - (Now() - currentTime);
+	const float elapsed = Now() - currentTime;
+	//Serial.println(elapsed * 1000.f);
+
+	const float extraTimeForFPSCAP = minFrameTime - elapsed;
 	if (extraTimeForFPSCAP > 0.0f)
 	{
 		// Cap FPS with a delay

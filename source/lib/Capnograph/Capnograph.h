@@ -22,7 +22,8 @@ public:
     // List of patterns. First is higher priority.
     AnalysisPattern* analysisPatterns[2] {&pattern_hiperventilation, &pattern_hipoventilation};
 
-    RecordingSet record {2000};
+    // 200 samples, 20hz = 10 seconds
+    TRecordingSet<200, 20> record {};
     FrameTime frame;
 
 private:
@@ -44,7 +45,6 @@ public:
 
         sensor.Record(record);
         ui.Draw(*this);
-        //Serial.println(frame.GetFPS());
         frame.PostTick();
     }
 
