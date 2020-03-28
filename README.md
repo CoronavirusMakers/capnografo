@@ -7,4 +7,5 @@ This project implements an open-source, cheap and quick to manufacture alternati
 
 ## Must Read
 - Specification: https://docs.google.com/document/d/1Fy8tQPNT1egSTognoJjIqcrcn0vAoZsc47lan9tsMqQ/edit#
+- [Drive Folder](https://drive.google.com/drive/folders/1-fBFVFW2NwqgQL-am8wTxIKTYgCndMPH?usp=sharing)
 - About Capnography: https://en.wikipedia.org/wiki/Capnography
