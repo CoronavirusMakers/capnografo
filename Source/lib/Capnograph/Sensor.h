@@ -14,7 +14,31 @@ public:
     virtual void Record(RecordingSet& record) = 0;
 };
 
-class Sensor_SprintIR : public Sensor {};
+class Sensor_SprintIR : public Sensor
+{
+    char printBuffer[33];
+    HardwareSerial sensorSerial {2};
+
+public:
+
+    Sensor_SprintIR() : Sensor()
+    {
+        sensorSerial.begin(9600);
+    }
+
+    virtual void Record(RecordingSet& record) override
+    {
+        // Wait for a new chain of values
+        while(sensorSerial.read() != 'Z') {}
+
+        u32 co2filteredRX = sensorSerial.parseInt();
+        u32 co2rawRX = sensorSerial.parseInt();
+
+        // Record value
+        lastValue = float(co2rawRX) / 1000.f;
+        record.RecordValue(lastValue);
+    }
+};
 
 class Sensor_MockAnalog : public Sensor
 {

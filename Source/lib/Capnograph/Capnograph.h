@@ -28,14 +28,15 @@ public:
 
 private:
 
-    Sensor_MockAnalog realSensor;
-
+    //Sensor_MockAnalog realSensor;
+    Sensor_SprintIR realSensor;
 
 public:
 
     void Setup()
     {
-        frame.SetFPSCap(20);
+        // No FPS cap as this is done by the sensor
+        //frame.SetFPSCap(20);
         SetupPatterns();
         ui.Start();
     }
