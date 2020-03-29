@@ -3,6 +3,13 @@
 
 #include "Pattern.h"
 
+class Pattern_Differential : public AnalysisPattern
+{
+    virtual bool Analize(const RecordingSet& recording) const override
+    { return false; }
+    virtual void OnTrigger() const override {}
+};
+
 
 class Pattern_Hipoventilation : public AnalysisPattern
 {
