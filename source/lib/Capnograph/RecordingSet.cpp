@@ -19,6 +19,11 @@ v2 RecordingSet::Get(i32 index) const
     return {time, value};
 }
 
+float RecordingSet::GetValue(i32 index) const
+{
+    return valuesPtr[GetRealIndex(index)];
+}
+
 i32 RecordingSet::GetRealIndex(i32 index) const
 {
     index += firstIndex;

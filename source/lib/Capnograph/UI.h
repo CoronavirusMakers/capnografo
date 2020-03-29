@@ -27,4 +27,6 @@ public:
 private:
 
     void DrawCurrentValue(Capnograph& capnograph);
+
+    void DrawBreathsPerSecond(Capnograph& capnograph);
 };

@@ -52,6 +52,11 @@ public:
         screen.setCursor(position.x, position.y);
     }
 
+    v2i GetCursor() const
+    {
+        return { screen.getCursorX(), screen.getCursorY() };
+    }
+
     void SetTextColor(u16 color)
     {
         screen.setTextColor(color);
@@ -60,6 +65,15 @@ public:
     void SetTextColor(u16 color, u16 bg)
     {
         screen.setTextColor(color, bg);
+    }
+
+    template<typename StringType>
+    void GetTextBounds(StringType string, v2i position, v2i& size)
+    {
+        i16 posX, posY;
+        u16 w, h;
+        screen.getTextBounds(string, position.x, position.y, &posX, &posY, &w, &h);
+        size = {w, h};
     }
 
     void SetTextSize(u8 size)

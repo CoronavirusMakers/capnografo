@@ -23,6 +23,7 @@ void UI::Draw(Capnograph& capnograph)
     //display.DrawPixel({100, 0}, COLOR_RED);
 
     DrawCurrentValue(capnograph);
+    DrawBreathsPerSecond(capnograph);
 }
 
 void UI::DrawCurrentValue(Capnograph& capnograph)
@@ -39,8 +40,42 @@ void UI::DrawCurrentValue(Capnograph& capnograph)
         color = COLOR_YELLOW;
     }
 
-    display.SetCursor({10, display.GetSize().y - 10});
+    display.SetCursor({5, display.GetSize().y - 10});
     display.SetTextSize(4);
     display.SetTextColor(color, COLOR_BLACK);
     display.Print(value, 0);
+
+    display.SetTextSize(1);
+    display.Print("kppm");
+}
+
+void UI::DrawBreathsPerSecond(Capnograph& capnograph)
+{
+    const float value = 13.f;
+
+    u16 color = COLOR_WHITE;
+    if(value < 4)
+    {
+        color = COLOR_RED;
+    }
+    else if(value < 8)
+    {
+        color = COLOR_YELLOW;
+    }
+
+    v2i cursor {
+        Math::FloorToI32(display.GetSize().x * 0.75f),
+        display.GetSize().y - 10
+    };
+    display.SetCursor(cursor);
+    display.SetTextSize(3);
+    display.SetTextColor(color, COLOR_BLACK);
+    display.Print(value, 0);
+
+    v2i size;
+    display.GetTextBounds("0", cursor, size);
+
+    display.SetCursor(cursor - v2i{13, size.y});
+    display.SetTextSize(1);
+    display.Print("resp/min");
 }

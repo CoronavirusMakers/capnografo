@@ -22,8 +22,8 @@ public:
     // List of patterns. First is higher priority.
     AnalysisPattern* analysisPatterns[2] {&pattern_hiperventilation, &pattern_hipoventilation};
 
-    // 200 samples, 20hz = 10 seconds
-    TRecordingSet<200, 20> record {};
+    // 300 samples, 20hz = 15 seconds
+    TInlineRecordingSet<300, 20> record {};
     FrameTime frame;
 
 private:

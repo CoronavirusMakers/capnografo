@@ -33,6 +33,7 @@ public:
     float GetMaxDuration() const { return timePerSample * maxSize; }
 
     v2 Get(i32 index) const;
+    float GetValue(i32 index) const;
     i32 GetRealIndex(i32 index) const;
 
     float GetSize() const { return size; }
@@ -41,18 +42,34 @@ public:
 
 
 template<i32 samples, i32 samplesPerSecond>
-struct TRecordingSet : public RecordingSet
+struct TInlineRecordingSet : public RecordingSet
 {
 protected:
 
-    float values[samples] {};
+    float values[samples];
 
 
 public:
 
-    TRecordingSet() : RecordingSet(1.f / samplesPerSecond, samples)
+    TInlineRecordingSet() : RecordingSet(1.f / samplesPerSecond, samples)
     {
         valuesPtr = values;
     }
-    TRecordingSet(TRecordingSet&& other) = default;
+    TInlineRecordingSet(TInlineRecordingSet&& other) = default;
+};
+
+struct DynamicRecordingSet : public RecordingSet
+{
+public:
+
+    DynamicRecordingSet(float timePerSample, i32 maxSize)
+        : RecordingSet(timePerSample, maxSize)
+    {
+        valuesPtr = new float[maxSize];
+    }
+
+    ~DynamicRecordingSet()
+    {
+        delete[] valuesPtr;
+    }
 };

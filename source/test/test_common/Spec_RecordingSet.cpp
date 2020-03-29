@@ -6,7 +6,7 @@
 
 void Record_CanInitialize()
 {
-    TRecordingSet<200, 20> record {};
+    TInlineRecordingSet<200, 20> record {};
     TEST_ASSERT_EQUAL(200, record.GetMaxSamples());
     TEST_ASSERT_EQUAL_FLOAT(10.f, record.GetMaxDuration());
 
@@ -16,7 +16,7 @@ void Record_CanInitialize()
 
 void Record_CanAddValue()
 {
-    TRecordingSet<200, 20> record {};
+    TInlineRecordingSet<200, 20> record {};
     record.RecordValue(1.f);
 
     TEST_ASSERT_EQUAL(1, record.GetNumSamples());
@@ -24,7 +24,7 @@ void Record_CanAddValue()
 
 void Record_CanGetValue()
 {
-    TRecordingSet<200, 20> record {};
+    TInlineRecordingSet<200, 20> record {};
     record.RecordValue(4.f);
     record.RecordValue(5.f);
 
