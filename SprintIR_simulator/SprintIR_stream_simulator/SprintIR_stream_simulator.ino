@@ -28,7 +28,7 @@ long ppmData50Hz[151] = {
 
 void simulateSprintIR(long co2filteredTX, long co2rawTX)
 {
-  char buffer[17];
+  char buffer[18];
   //Simulate the protocol "Z XXXXX z XXXXX\r\n"
   sprintf(buffer,"Z %05ld z %05ld\r\n", co2filteredTX, co2rawTX);
   Serial.print(buffer);
@@ -57,7 +57,7 @@ void loop() {
       break;
     default:
       Serial.print("wrong frequency, please choose 20 or 50Hz");
-      while(1)
+      while(1){yield();}
       break;
   }
 }
